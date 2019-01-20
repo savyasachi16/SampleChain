@@ -16,7 +16,7 @@ def getLatestBlock(startBalances, pendingTransactions, blockSize):
         nonce = findNonce(previousHash, currentTransactions)
         currentHash = findBlockHash(previousHash, currentTransactions,nonce)
 
-    return currentHash + ',' + previousHash + ',' + str(nonce) + ',' + str(currentTransactions)
+    return currentHash + ', ' + previousHash + ', ' + str(nonce) + ', ' + str(currentTransactions)
 
 
 def sha1(text):
@@ -26,15 +26,14 @@ def sha1(text):
 
 
 def findBlockHash(prevBlockHash, transactions,nonce):
-    return sha1(prevBlockHash + ',' + str(nonce) + ',' + str(transactions))
+    return sha1(prevBlockHash + ', ' + str(nonce) + ', ' + str(transactions))
 
 
 def findNonce(prevBlockHash, transactions):
     found = 0
     nonce = 1
-    print(prevBlockHash + ',' + str(nonce) + ',' + str(transactions))
     while found == 0:
-        hash = sha1(prevBlockHash + ',' + str(nonce) + ',' + str(transactions))
+        hash = sha1(prevBlockHash + ', ' + str(nonce) + ', ' + str(transactions))
         if hash[0:4] == '0000':
             found = 1
             break
