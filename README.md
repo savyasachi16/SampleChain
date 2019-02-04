@@ -23,7 +23,8 @@ Each block should have blockSize transactions if there are >= blockSize transact
 Transactions
 A transaction ti is valid if the address at from has a balance >= value after processing all transactions tj for which j < i. Some transactions in pendingTransactions may be invalid. These transactions should be omitted from all blocks. You can assume that from and to will have entries in startBalances.
 
-Examples:
+Example Outputs:
+
 getLastBlock([5, 0, 0], [[0, 1, 5], [1, 2, 5]], 2) = "00000d03a1ce56a06bfdbceb0249bbb2204a6f22, 0000000000000000000000000000000000000000, 28427, [[0, 1, 5], [1, 2, 5]]"
 
 getLatestBlock([1,7], [[1, 0, 4], [1, 0, 3], [1, 0, 2]], 2) = "000034820d4fc67dc28e109dc01a44c2dab76ad0, 0000000000000000000000000000000000000000, 12643, [[1, 0, 4], [1, 0, 3]]"
