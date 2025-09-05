@@ -1,0 +1,11 @@
+# Production dependencies
+click>=8.0.0
+pydantic>=1.10.0
+
+# Development dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+black>=22.0.0
+flake8>=4.0.0
+mypy>=1.0.0
+hypothesis>=6.0.0

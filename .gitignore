@@ -1,13 +1,35 @@
-# Python
+.flake8
+.DS_Store
+.coverage
+.gitattributes
+
+# Python cache and compiled files
 __pycache__/
 *.pyc
 *.pyo
+*.pyd
 
-# Virtual environments
+# Testing
+.pytest_cache/
+htmlcov/
+
+# Type checking
+.mypy_cache/
+
+# Package building
+*.egg-info/
+build/
+dist/
+
+# Virtual environments  
 venv/
 env/
-.venv
+.venv/
 
-# System files
-.DS_Store
-.gitattributes
+# Blockchain data files
+blockchain.json
+*.blockchain
+
+# Temporary files
+*.tmp
+*.log
