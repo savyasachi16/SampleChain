@@ -279,13 +279,19 @@ class TestBlockchain:
         
         blockchain.add_transaction(tx1)
         blockchain.add_transaction(tx2)
+        
+        # Mine first block
+        block1 = blockchain.mine_pending_transactions(miner_address=99, block_size=2)
+        if block1:
+            blockchain.add_block(block1, skip_mining=True)
+        
+        # Now address 1 has 50 coins, so tx3 should be valid
         blockchain.add_transaction(tx3)
         
-        # Mine blocks
-        for _ in range(2):  # Mine in two separate blocks
-            block = blockchain.mine_pending_transactions(miner_address=99, block_size=2)
-            if block:
-                blockchain.add_block(block, skip_mining=True)
+        # Mine second block
+        block2 = blockchain.mine_pending_transactions(miner_address=99, block_size=2)
+        if block2:
+            blockchain.add_block(block2, skip_mining=True)
         
         # Check transaction history
         history_0 = blockchain.get_transaction_history(0)

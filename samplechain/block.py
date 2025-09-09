@@ -43,8 +43,8 @@ class Block:
         if self.index < 0:
             raise ValueError("Block index must be non-negative")
 
-        if self.difficulty < 1:
-            raise ValueError("Difficulty must be at least 1")
+        if self.difficulty < 0:
+            raise ValueError("Difficulty must be non-negative")
 
         if len(self.previous_hash) != 64:
             raise ValueError("Previous hash must be 64 characters (SHA256)")
@@ -93,6 +93,10 @@ class Block:
         """
         if block_hash is None:
             block_hash = self.calculate_hash()
+
+        # If difficulty is 0, any hash is valid
+        if self.difficulty == 0:
+            return True
 
         required_prefix = "0" * self.difficulty
         return block_hash.startswith(required_prefix)
@@ -143,6 +147,22 @@ class Block:
             Sum of all transaction fees
         """
         return sum(tx.fee for tx in self.transactions)
+
+    def copy(self) -> "Block":
+        """
+        Create a copy of this block for parallel mining operations.
+
+        Returns:
+            New Block instance with the same data
+        """
+        return Block(
+            index=self.index,
+            transactions=self.transactions.copy(),
+            timestamp=self.timestamp,
+            previous_hash=self.previous_hash,
+            nonce=self.nonce,
+            difficulty=self.difficulty,
+        )
 
     def to_dict(self) -> Dict[str, Any]:
         """

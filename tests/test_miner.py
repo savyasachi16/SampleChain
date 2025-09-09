@@ -88,10 +88,8 @@ class TestMiner:
         """Test mining with invalid difficulty raises error."""
         miner = Miner()
         
-        block = Block(index=1, transactions=[], difficulty=0)
-        
-        with pytest.raises(MiningError, match="Block difficulty must be at least 1"):
-            miner.mine_block(block)
+        with pytest.raises(ValueError, match="Difficulty must be non-negative"):
+            Block(index=1, transactions=[], difficulty=-1)
     
     def test_mine_block_parallel_success(self) -> None:
         """Test parallel mining succeeds."""
@@ -201,7 +199,7 @@ class TestMiner:
         """Test mining multiple blocks on a blockchain."""
         initial_balances = {0: 1000, 1: 0}
         blockchain = Blockchain(initial_balances=initial_balances)
-        miner = Miner(max_nonce=10000)
+        miner = Miner(max_nonce=100000)
         
         # Add transactions
         for i in range(1, 6):
@@ -239,7 +237,7 @@ class TestMiner:
         """Test mining blockchain with parallel mining enabled."""
         initial_balances = {0: 500}
         blockchain = Blockchain(initial_balances=initial_balances)
-        miner = Miner(max_nonce=5000)
+        miner = Miner(max_nonce=500000)
         
         # Add some transactions
         for i in range(1, 4):

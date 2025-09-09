@@ -58,8 +58,8 @@ class TestBlock:
     
     def test_invalid_difficulty(self) -> None:
         """Test that invalid difficulty raises ValueError."""
-        with pytest.raises(ValueError, match="Difficulty must be at least 1"):
-            Block(index=0, transactions=[], difficulty=0)
+        with pytest.raises(ValueError, match="Difficulty must be non-negative"):
+            Block(index=0, transactions=[], difficulty=-1)
     
     def test_invalid_previous_hash_length(self) -> None:
         """Test that invalid previous hash length raises ValueError."""

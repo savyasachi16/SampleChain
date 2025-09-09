@@ -65,8 +65,8 @@ class Miner:
         Raises:
             MiningError: If mining fails due to invalid block
         """
-        if block.difficulty < 1:
-            raise MiningError("Block difficulty must be at least 1")
+        if block.difficulty < 0:
+            raise MiningError("Block difficulty must be non-negative")
 
         start_time = time.time()
         target_prefix = "0" * block.difficulty
@@ -79,7 +79,8 @@ class Miner:
             if self.progress_callback and nonce % 1000 == 0:
                 self.progress_callback(nonce, current_hash)
 
-            if current_hash.startswith(target_prefix):
+            # If difficulty is 0, any hash is valid
+            if block.difficulty == 0 or current_hash.startswith(target_prefix):
                 # Mining successful
                 end_time = time.time()
                 mining_time = end_time - start_time
@@ -175,7 +176,8 @@ class Miner:
             block.nonce = nonce
             current_hash = block.calculate_hash()
 
-            if current_hash.startswith(target_prefix):
+            # If difficulty is 0, any hash is valid
+            if block.difficulty == 0 or current_hash.startswith(target_prefix):
                 return (nonce, current_hash)
 
         return None
